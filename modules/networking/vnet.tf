@@ -79,11 +79,11 @@ resource "azurerm_key_vault" "github_token" {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = data.azurerm_client_config.current.object_id
 
-    key_permissions = ["List", "Create", "Delete", "Get", "Purge", "Recover", "Update", "GetRotationPolicy", "SetRotationPolicy"]
+    key_permissions = ["List", "Get"]
 
-    secret_permissions = ["List", "Create", "Delete", "Get", "Purge", "Recover", "Update", "GetRotationPolicy", "SetRotationPolicy"]
+    secret_permissions = ["List", "Get"]
 
-    storage_permissions = ["List", "Create", "Delete", "Get", "Purge", "Recover", "Update", "GetRotationPolicy", "SetRotationPolicy"]
+    storage_permissions = ["List", "Get"]
   }
 }
 
@@ -91,6 +91,13 @@ resource "azurerm_key_vault_secret" "github_token" {
   name         = "secretgithubtoken"
   value        = "github_token"
   key_vault_id = azurerm_key_vault.github_token.id
+}
+
+resource "azurerm_subnet" "gateway_subnet" {
+  name                 = "GatewaySubnet"
+  resource_group_name  = azurerm_resource_group.vnet_resource_group.name
+  virtual_network_name = azurerm_virtual_network.virtual_network.name
+  address_prefixes     = ["10.0.1.0/24"]
 }
 
 resource "azurerm_virtual_network_gateway" "vnet_gw" {
@@ -109,7 +116,7 @@ resource "azurerm_virtual_network_gateway" "vnet_gw" {
     name                          = "vnetGatewayConfig"
     public_ip_address_id          = azurerm_public_ip.vnet_public_ip.id
     private_ip_address_allocation = "Dynamic"
-    subnet_id                     = azurerm_subnet.aks_subnet.id
+    subnet_id                     = azurerm_subnet.gateway_subnet.id
   }
 
   vpn_client_configuration {
