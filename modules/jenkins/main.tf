@@ -42,13 +42,9 @@ locals {
     apt-get update
     apt-get install trivy -y
     # Refer: https://aquasecurity.github.io/trivy/v0.29.2/getting-started/installation/
-    # install aws cli
-    apt install unzip -y
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    unzip awscliv2.zip
-    ./aws/install
-    aws --version
-
+    # install azure cli
+    curl -L https://aka.ms/InstallAzureCli | bash
+    az --version
 
   EOT
 }
