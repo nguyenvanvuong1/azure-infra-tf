@@ -39,5 +39,15 @@ module "aks" {
     azure_policy                = false
     ingress_application_gateway = true
   }
+}
 
+module "acr" {
+  source   = "../../modules/acr"
+  name     = var.acr_name
+  environment = var.environment
+  subscription_id = var.subscription_id
+  resource_group_name = module.vnet_aks.resource_group
+  resource_group_location = var.location
+  kubelet_object_id = module.aks.kubelet_object_id
+  project = var.project
 }

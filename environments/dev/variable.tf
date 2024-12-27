@@ -71,3 +71,9 @@ variable "ssh_public_key" {
 variable "subscription_id" {
   type = string
 }
+variable "acr_name" {
+  type = string
+}
+variable "project" {
+  type = string
+}
