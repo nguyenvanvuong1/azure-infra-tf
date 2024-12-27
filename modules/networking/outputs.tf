@@ -21,3 +21,7 @@ output "resource_group" {
 output "resource_group_id" {
   value = azurerm_resource_group.vnet_resource_group.id
 }
+
+output "vniid" {
+  value = azurerm_network_interface.vnet_interface.id
+}
