@@ -18,6 +18,7 @@ module "vnet_aks" {
   appgw_subnet_address_name   = var.appgw_subnet_address_name
   environment                 = var.environment
   subscription_id = var.subscription_id
+  project = var.project
 }
 
 # module "aks" {

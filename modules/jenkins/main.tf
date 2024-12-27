@@ -58,10 +58,10 @@ resource "azurerm_linux_virtual_machine" "vm_jenkins" {
     resource_group_name = var.resource_group_name
     location            = var.resource_group_location
     size                = "Standard_DS1_v2"
-    admin_username      = "sd4776"
+    admin_username      = "vuongnv"
     admin_ssh_key {
       public_key = var.ssh_public_key
-      username = "sd4776"
+      username = "vuongnv"
     }
     user_data = base64encode(local.user_data)
     tags = {
@@ -105,7 +105,7 @@ resource "azurerm_network_security_group" "sg_jenkins" {
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
-    source_port_range          = "8080"
+    source_port_range          = "*"
     destination_port_range     = "8080"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
@@ -116,11 +116,13 @@ resource "azurerm_network_security_group" "sg_jenkins" {
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
-    source_port_range          = "22"
+    source_port_range          = "*"
     destination_port_range     = "22"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+  
+  
   tags = {
     Terraform   = "true"
     Environment = var.environment

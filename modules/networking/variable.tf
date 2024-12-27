@@ -26,5 +26,7 @@ variable "appgw_subnet_address_name" {
 variable "environment" {
 }
 variable "subscription_id" {
+}
+variable "project" {
   
 }
