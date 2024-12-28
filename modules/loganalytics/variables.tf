@@ -14,3 +14,6 @@ variable "environment" {
 variable "subscription_id" {
   
 }
+variable "resource_group_name" {
+  default = "uksouth"
+}

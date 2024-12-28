@@ -14,14 +14,6 @@ output "vnet_name" {
   value = azurerm_virtual_network.virtual_network.name
 }
 
-output "resource_group" {
-  value = azurerm_resource_group.vnet_resource_group.name
-}
-
-output "resource_group_id" {
-  value = azurerm_resource_group.vnet_resource_group.id
-}
-
 output "vniid" {
   value = azurerm_network_interface.vnet_interface.id
 }

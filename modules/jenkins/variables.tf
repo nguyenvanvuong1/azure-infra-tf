@@ -15,5 +15,8 @@ variable "network_interface_id" {
   
 }
 variable "subscription_id" {
-  
+}
+variable "scfile" {
+  type = string
+  default = "yum.bash"
 }
