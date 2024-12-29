@@ -2,8 +2,8 @@
 # data
 data "azurerm_client_config" "current" {}
 locals {
-  key_vault_permissions = ["List", "Get", "Update", "Create", "Delete", "Recover"]
-  key_vault_secret_permissions = ["Get", "List", "Set", "Delete", "Recover", "Purge" ]
+  key_vault_permissions         = ["List", "Get", "Update", "Create", "Delete", "Recover"]
+  key_vault_secret_permissions  = ["Get", "List", "Set", "Delete", "Recover", "Purge"]
   key_vault_storage_permissions = ["Backup", "Delete", "Get", "List", "Recover"]
 }
 # key vault

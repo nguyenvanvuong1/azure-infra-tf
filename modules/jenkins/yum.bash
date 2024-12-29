@@ -8,6 +8,9 @@ curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | tee /usr/s
 echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ |  tee /etc/apt/sources.list.d/jenkins.list > /dev/null
 apt-get update && apt-get install jenkins -y
 systemctl enable jenkins && systemctl start jenkins
+## jenkins acr plugin
+## https://plugins.jenkins.io/azure-container-registry-tasks/
+jenkins-plugin-cli --plugins credentials:1405.vb_cda_74a_f8974
 ## install docker
 # Add Docker's official GPG key:
 apt-get update

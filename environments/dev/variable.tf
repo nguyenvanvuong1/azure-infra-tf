@@ -78,12 +78,12 @@ variable "project" {
   type = string
 }
 variable "gateway_subnet_address_prefix" {
-  
+
 }
 variable "vpn_address_space" {
 }
 variable "github_token" {
-  
+
 }
 variable "scfile" {
   type = string

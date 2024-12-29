@@ -1,8 +1,8 @@
 variable "resource_group_name" {
-  
+
 }
 variable "resource_group_location" {
-  
+
 }
 
 variable "ssh_public_key" {
@@ -12,11 +12,11 @@ variable "ssh_public_key" {
 variable "environment" {
 }
 variable "network_interface_id" {
-  
+
 }
 variable "subscription_id" {
 }
 variable "scfile" {
-  type = string
+  type    = string
   default = "yum.bash"
 }

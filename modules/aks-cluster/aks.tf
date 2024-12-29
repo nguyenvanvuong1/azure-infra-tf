@@ -30,7 +30,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
   azure_policy_enabled = var.addons.azure_policy
   ingress_application_gateway {
-    subnet_id = var.agic_subnet_id 
+    subnet_id = var.agic_subnet_id
   }
 
   network_profile {
@@ -50,7 +50,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 data "azurerm_resource_group" "node_resource_group" {
   name = azurerm_kubernetes_cluster.k8s.node_resource_group
   depends_on = [
-     azurerm_kubernetes_cluster.k8s
+    azurerm_kubernetes_cluster.k8s
   ]
 }
 
@@ -59,6 +59,6 @@ resource "azurerm_role_assignment" "node_infrastructure_update_scale_set" {
   scope                = data.azurerm_resource_group.node_resource_group.id
   role_definition_name = "Virtual Machine Contributor"
   depends_on = [
-     azurerm_kubernetes_cluster.k8s
+    azurerm_kubernetes_cluster.k8s
   ]
 }

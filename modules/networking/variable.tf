@@ -1,5 +1,5 @@
 variable "location" {
-    type = string
+  type = string
 }
 variable "rg_name" {
   type = string
@@ -16,7 +16,7 @@ variable "appgw_subnet_address_name" {
 }
 variable "environment" {
 }
-variable "project" { 
+variable "project" {
 }
 variable "subscription_id" {
   type = string

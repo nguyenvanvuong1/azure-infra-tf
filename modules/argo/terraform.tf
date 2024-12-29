@@ -1,8 +1,6 @@
 terraform {
   required_version = ">= 1.0.1"
   backend "azurerm" {
-    key      = "terraform.tfstate"
-    use_oidc = true
   }
   required_providers {
     kubernetes = {
@@ -23,3 +21,4 @@ terraform {
     }
   }
 }
+
