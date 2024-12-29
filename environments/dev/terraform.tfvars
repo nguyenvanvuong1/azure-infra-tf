@@ -1,6 +1,6 @@
 log_analytics_workspace_name  = "sd4776"
 location                      = "southeastasia"
-kubernetes_version            = "1.29.2"
+kubernetes_version            = "1.30.6"
 agent_count                   = "1"
 vm_size                       = "standard_a2_v2"
 environment                   = "dev"
