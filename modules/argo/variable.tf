@@ -7,18 +7,21 @@ variable "environment" {
   type    = string
   default = "vuongnv"
 }
-variable "oidc_provider_arn" {
-  type = string
-}
 variable "cluster_endpoint" {
   type = string
 }
-variable "cluster_certificate_authority_data" {
+variable "cluster_ca_certificate" {
   type = string
 }
-variable "cluster_name" {
+variable "client_key" {
+  type = string
+}
+variable "client_certificate" {
   type = string
 }
 variable "subscription_id" {
+
+}
+variable "github_token" {
   
 }

@@ -8,42 +8,6 @@ variable "location" {
   description = "Location of Resources"
 }
 
-variable "vnet_name" {
-  type        = string
-  description = "Virtual Network Name"
-}
-
-variable "network_address_space" {
-  type        = string
-  description = "Virtual Network Address Space"
-}
-
-
-variable "aks_subnet_address_prefix" {
-  type        = string
-  description = "AKS Subnet Address Prefix"
-}
-
-variable "aks_subnet_address_name" {
-  type        = string
-  description = "AKS Subnet Name"
-}
-
-variable "appgw_subnet_address_prefix" {
-  type        = string
-  description = "AppGW Subnet Address Prefix"
-}
-
-variable "appgw_subnet_address_name" {
-  type        = string
-  description = "AppGW Subnet Name"
-}
-
-variable "aks_name" {
-  type        = string
-  description = "AKS Name"
-}
-
 variable "kubernetes_version" {
   type        = string
   description = "AKS K8s Version"
@@ -71,20 +35,29 @@ variable "ssh_public_key" {
 variable "subscription_id" {
   type = string
 }
-variable "acr_name" {
-  type = string
-}
+
 variable "project" {
   type = string
 }
-variable "gateway_subnet_address_prefix" {
-
-}
-variable "vpn_address_space" {
-}
 variable "github_token" {
-
+  type      = string
+  sensitive = true
 }
 variable "scfile" {
+  type = string
+}
+variable "jenkins_network_address_space" {
+  type = string
+}
+variable "jenkins_subnet_address" {
+  type = string
+}
+variable "aks_network_address_space" {
+  type = string
+}
+variable "aks_subnet_address" {
+  type = string
+}
+variable "aks_ingress_subnet_address" {
   type = string
 }

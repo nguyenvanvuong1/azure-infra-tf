@@ -20,11 +20,6 @@ service:
     ingress:
       enabled: false
 
-repoServer:
-  serviceAccount:
-    annotations:
-      eks.amazonaws.com/role-arn: ${iam_role}
-
 notification:
   enabled: true
   argocdUrl:

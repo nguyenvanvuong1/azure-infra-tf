@@ -1,13 +1,21 @@
 resource "azurerm_kubernetes_cluster" "k8s" {
-  name                = var.name
+  name                = "${var.project}-${var.environment}-k8s"
   location            = var.location
   resource_group_name = var.resource_group_name
-  dns_prefix          = var.name
+  dns_prefix          = "${var.project}-dns"
   kubernetes_version  = var.kubernetes_version
+  # Enable workload identity
+  workload_identity_enabled           = true
+  private_cluster_enabled             = false
+  private_cluster_public_fqdn_enabled = false
 
-  node_resource_group = "${var.name}-node-rg"
+  # Enable OIDC issure
+  oidc_issuer_enabled = true
+
+
+  node_resource_group = "${var.project}-${var.environment}-node-rg"
   linux_profile {
-    admin_username = "ubuntu"
+    admin_username = "vuongnv"
     ssh_key {
       key_data = var.ssh_public_key
     }
@@ -30,7 +38,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
   azure_policy_enabled = var.addons.azure_policy
   ingress_application_gateway {
-    subnet_id = var.agic_subnet_id
+    subnet_id = var.aks_ingress_subnet_id
   }
 
   network_profile {
@@ -39,6 +47,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
   role_based_access_control_enabled = var.kubernetes_cluster_rbac_enabled
   azure_active_directory_role_based_access_control {
+    azure_rbac_enabled     = true
     admin_group_object_ids = [var.aks_admins_group_object_id]
   }
 

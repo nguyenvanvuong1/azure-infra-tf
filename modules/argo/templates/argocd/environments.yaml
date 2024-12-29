@@ -17,7 +17,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: 'https://github.com/nguyenvanvuong1/gitops'
+        repoURL: 'https://github.com/nguyenvanvuong1/azure-gitops'
         path: "manifest/{{env}}"
         targetRevision: "main"
       destination:

@@ -5,27 +5,29 @@ module "resource_group" {
   environment     = var.environment
   subscription_id = var.subscription_id
 }
+
 module "key_vault" {
   source          = "../../modules/keyvault"
   project         = var.project
   location        = var.location
   environment     = var.environment
-  github_token    = var.github_token
+  github_token    = base64decode(var.github_token)
   rg_name         = module.resource_group.resource_group_name
   subscription_id = var.subscription_id
 }
+
 module "vnet_aks" {
-  source                      = "../../modules/networking"
-  project                     = var.project
-  location                    = var.location
-  network_address_space       = var.network_address_space
-  aks_subnet_address_prefix   = var.aks_subnet_address_prefix
-  aks_subnet_address_name     = var.aks_subnet_address_name
-  appgw_subnet_address_prefix = var.appgw_subnet_address_prefix
-  appgw_subnet_address_name   = var.appgw_subnet_address_name
-  environment                 = var.environment
-  rg_name                     = module.resource_group.resource_group_name
-  subscription_id             = var.subscription_id
+  source                        = "../../modules/networking"
+  project                       = var.project
+  location                      = var.location
+  environment                   = var.environment
+  rg_name                       = module.resource_group.resource_group_name
+  subscription_id               = var.subscription_id
+  jenkins_network_address_space = var.jenkins_network_address_space
+  jenkins_subnet_address        = var.jenkins_subnet_address
+  aks_network_address_space     = var.aks_network_address_space
+  aks_ingress_subnet_address    = var.aks_ingress_subnet_address
+  aks_subnet_address            = var.aks_subnet_address
 }
 
 module "loganalytics" {
@@ -40,7 +42,7 @@ module "loganalytics" {
 
 module "jenkins" {
   source                  = "../../modules/jenkins"
-  network_interface_id    = module.vnet_aks.vniid
+  network_interface_id    = module.vnet_aks.jenkins_vn_iid
   resource_group_name     = module.resource_group.resource_group_name
   resource_group_location = var.location
   environment             = var.environment
@@ -51,7 +53,7 @@ module "jenkins" {
 
 module "aks" {
   source                     = "../../modules/aks-cluster"
-  name                       = var.aks_name
+  project                    = var.project
   kubernetes_version         = var.kubernetes_version
   agent_count                = var.agent_count
   vm_size                    = var.vm_size
@@ -59,11 +61,10 @@ module "aks" {
   ssh_public_key             = var.ssh_public_key
   log_analytics_workspace_id = module.loganalytics.id
   aks_subnet                 = module.vnet_aks.aks_subnet_id
-  agic_subnet_id             = module.vnet_aks.appgw_subnet_id
+  aks_ingress_subnet_id      = module.vnet_aks.aks_ingress_subnet_id
   environment                = var.environment
   subscription_id            = var.subscription_id
-  resource_group_name        = module.vnet_aks.resource_group
-
+  resource_group_name        = module.resource_group.resource_group_name
   addons = {
     oms_agent                   = true
     azure_policy                = false
@@ -73,11 +74,20 @@ module "aks" {
 
 module "acr" {
   source                  = "../../modules/acr"
-  name                    = var.acr_name
+  project                 = var.project
   environment             = var.environment
   subscription_id         = var.subscription_id
-  resource_group_name     = module.vnet_aks.resource_group
+  resource_group_name     = module.resource_group.resource_group_name
   resource_group_location = var.location
   kubelet_object_id       = module.aks.kubelet_object_id
-  project                 = var.project
+}
+
+module "argocd" {
+  source                 = "../../modules/argo"
+  cluster_endpoint       = module.aks.host
+  cluster_ca_certificate = module.aks.cluster_ca_certificate
+  client_certificate     = module.aks.client_certificate
+  client_key             = module.aks.client_key
+  subscription_id        = var.subscription_id
+  github_token           = module.key_vault.github_token
 }

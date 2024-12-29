@@ -4,23 +4,25 @@ provider "azurerm" {
 }
 provider "kubernetes" {
   host                   = var.cluster_endpoint
-  cluster_ca_certificate = base64decode(var.cluster_certificate_authority_data)
-  token                  = data.aws_eks_cluster_auth.this.token
+  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+  client_certificate     = base64decode(var.client_certificate)
+  client_key             = base64decode(var.client_key)
 }
 
 provider "helm" {
   kubernetes {
     host                   = var.cluster_endpoint
-    cluster_ca_certificate = base64decode(var.cluster_certificate_authority_data)
-    token                  = data.aws_eks_cluster_auth.this.token
+    cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+    client_certificate     = base64decode(var.client_certificate)
+    client_key             = base64decode(var.client_key)
   }
 }
 
 provider "kubectl" {
   apply_retry_count      = 5
   host                   = var.cluster_endpoint
-  cluster_ca_certificate = base64decode(var.cluster_certificate_authority_data)
+  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+  client_certificate     = base64decode(var.client_certificate)
+  client_key             = base64decode(var.client_key)
   load_config_file       = false
-
-  token = data.aws_eks_cluster_auth.this.token
 }

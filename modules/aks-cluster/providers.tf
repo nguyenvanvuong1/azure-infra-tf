@@ -5,8 +5,10 @@ provider "azurerm" {
 }
 
 provider "kubernetes" {
-  host                   = azurerm_kubernetes_cluster.aks.kube_config.0.host
-  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
+  host                   = module.k8s.kube_admin_config.0.host
+  cluster_ca_certificate = base64decode(module.k8s.kube_admin_config.0.cluster_ca_certificate)
+  client_certificate     = base64decode(module.k8s.kube_admin_config.0.client_certificate)
+  client_key             = base64decode(module.k8s.kube_admin_config.0.client_key)
 
   # using kubelogin to get an AAD token for the cluster.
   exec {
@@ -32,8 +34,10 @@ provider "kubernetes" {
 
 provider "helm" {
   kubernetes {
-    host                   = azurerm_kubernetes_cluster.aks.kube_config.0.host
-    cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
+    host                   = module.k8s.kube_admin_config.0.host
+    cluster_ca_certificate = base64decode(module.k8s.kube_admin_config.0.cluster_ca_certificate)
+    client_certificate     = base64decode(module.k8s.kube_admin_config.0.client_certificate)
+    client_key             = base64decode(module.k8s.kube_admin_config.0.client_key)
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "kubelogin"
@@ -58,8 +62,10 @@ provider "helm" {
 }
 
 provider "kubectl" {
-  host                   = azurerm_kubernetes_cluster.aks.kube_config.0.host
-  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
+  host                   = module.k8s.kube_admin_config.0.host
+  cluster_ca_certificate = base64decode(module.k8s.kube_admin_config.0.cluster_ca_certificate)
+  client_certificate     = base64decode(module.k8s.kube_admin_config.0.client_certificate)
+  client_key             = base64decode(module.k8s.kube_admin_config.0.client_key)
   apply_retry_count      = 5
   load_config_file       = false
 
