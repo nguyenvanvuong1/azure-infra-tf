@@ -1,12 +1,12 @@
 variable "location" {
-  default = "uksouth"
-  type    = string
+  type = string
 }
 variable "resource_group_name" {
-  default = "uksouth"
-  type    = string
+  type = string
 }
-
+variable "resource_group_id" {
+  type = string
+}
 variable "ssh_public_key" {
   default = "~/.ssh/id_rsa.pub"
   type    = string
@@ -25,7 +25,6 @@ variable "vm_size" {
 }
 
 variable "dns_prefix" {
-  default = "tamopsdns"
   type    = string
 }
 

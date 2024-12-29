@@ -65,6 +65,8 @@ module "aks" {
   environment                = var.environment
   subscription_id            = var.subscription_id
   resource_group_name        = module.resource_group.resource_group_name
+  resource_group_id          = module.resource_group.resource_group_id
+  dns_prefix                 = "${var.project}dns"
   addons = {
     oms_agent                   = true
     azure_policy                = false

@@ -1,3 +1,13 @@
+data "azuread_user" "vuongadmin" {
+  user_principal_name = "vuongnguyenv1@nashtechglobal.com"
+}
+
+resource "azurerm_role_assignment" "k8s_admin_role" {
+  scope                = var.resource_group_id
+  role_definition_name = "Azure Kubernetes Service Cluster Admin Role"
+  principal_id         = data.azuread_user.vuongadmin.object_id
+}
+
 resource "azurerm_kubernetes_cluster" "k8s" {
   name                = "${var.project}-${var.environment}-k8s"
   location            = var.location
@@ -50,6 +60,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     azure_rbac_enabled     = true
     admin_group_object_ids = [var.aks_admins_group_object_id]
   }
+
 
   tags = {
     Environment = var.environment
